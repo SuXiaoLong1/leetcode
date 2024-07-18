@@ -49,15 +49,25 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        dp=[0] * (target+1)
-        dp[0]=1
+
+        n = len(candidates)
+        if n==1:
+            if candidates[0]==target:
+                return [candidates]
+            else:
+                return []
         candidates.sort()
         res=[]
-
-        for i in candidates:
-            for j in range(target,i-1,-1):
-                dp[j] += dp[j-i]
-
-        return dp
+        for i in range(n):
+            if i>0 and candidates[i]==candidates[i-1]:
+                continue
+            if candidates[i]<target:
+                mid=self.combinationSum2(candidates[i+1:],target-candidates[i])
+                for j in mid:
+                    res.append([candidates[i]]+j)
+            elif candidates[i]==target:
+                res.append([candidates[i]])
+                break
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)
