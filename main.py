@@ -9,8 +9,33 @@ def print_hi(name):
     print(f'Hi, {name}')  # 按 Ctrl+F8 切换断点。
 
 
+class Solution:
+    def reverseBits(self, num: int) -> int:
+        mid = [0]
+        n = 1
+        while num != 0:
+            a = num % 2
+            if a == 1:
+                mid[-1] += 1
+            else:
+                mid.append(0)
+                n += 1
+            num = num // 2
+
+        res = mid[0]
+
+        for i in range(1, n):
+            res = max(res, mid[i - 1]+ mid[i])
+
+        return res + 1
+
+
 # 按装订区域中的绿色按钮以运行脚本。
 if __name__ == '__main__':
     print_hi('PyCharm')
     print(1)
+    num=2147482622
+    a=Solution()
+    print(a.reverseBits(num))
 # 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
+
