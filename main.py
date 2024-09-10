@@ -10,32 +10,64 @@ def print_hi(name):
 
 
 class Solution:
-    def reverseBits(self, num: int) -> int:
-        mid = [0]
-        n = 1
-        while num != 0:
-            a = num % 2
-            if a == 1:
-                mid[-1] += 1
+    def numberOf2sInRange(self, n: int) -> int:
+        if n<2:
+            return 0
+        if n<=10:
+            return 1
+        res=0
+        ninety=0
+        flag=1
+        m=0
+        while n!=0:
+            k=n%10
+            n=n//10
+
+            if k<2:
+                res=res+k*ninety
+            elif k==2:
+                res=res+m+1+k*ninety
             else:
-                mid.append(0)
-                n += 1
-            num = num // 2
+                res=res+k*ninety+flag
+            ninety=10*ninety+flag
+            m += k * flag
+            flag*=10
 
-        res = mid[0]
+        return res
 
-        for i in range(1, n):
-            res = max(res, mid[i - 1]+ mid[i])
-
-        return res + 1
 
 
 # 按装订区域中的绿色按钮以运行脚本。
 if __name__ == '__main__':
-    print_hi('PyCharm')
-    print(1)
-    num=2147482622
-    a=Solution()
-    print(a.reverseBits(num))
+    import sys
+
+    try:
+        while True:
+            line = sys.stdin.readline()
+            n = int(line[:-1])
+            triangle = [[1], [1, 1, 1]]
+            for i in range(2, n):
+                triangle.append([])
+                for j in range(i + 1):
+                    if j == 0:
+                        triangle[i].append(1)
+                    elif j == 1:
+                        triangle[i].append(i)
+                    else:
+                        triangle[i].append(triangle[i - 1][j - 2] + triangle[i - 1][j-1] + triangle[i - 1][j])
+                for j in range(i):
+                    triangle[i].append(triangle[i][i - j - 1])
+            flag = -1
+            for num in range(n-1):
+                if triangle[n-1][num] % 2 == 0:
+                    flag = num + 1
+                    break
+            print(flag)
+
+
+
+    except:
+        pass
+
 # 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
 
